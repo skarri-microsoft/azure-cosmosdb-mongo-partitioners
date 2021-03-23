@@ -6,10 +6,10 @@ import org.apache.spark.sql.SparkSession
 object Main {
   def main(args: Array[String]) {
 
-    val uri = "url"
+    val uri = "uri"
     val databaseName="test"
     val collectionName = "al"
-    val partitionerValue="com.microsoft.azure.cosmos.mongodb.partitioner.MongoStringPartitioner$"
+    val partitionerValue="com.microsoft.azure.cosmos.mongodb.partitioner.MongoStringNumberPartitioner$"
     val sc = SparkSession.builder()
       .master("local")
       .appName("custom-partitioner-demo")
@@ -18,7 +18,7 @@ object Main {
       .getOrCreate().sparkContext
 
     val readConfig= ReadConfig(
-      Map("uri" -> uri,"Database"->databaseName,"Collection"->collectionName,"spark.mongodb.input.partitioner"->partitionerValue,"spark.mongodb.input.partitionerOptions.approxDocsPerSecond"->"2000","spark.mongodb.input.partitionerOptions.partitionKey"->"storeId","batchSize"->"100"))
+      Map("uri" -> uri,"Database"->databaseName,"Collection"->collectionName,"spark.mongodb.input.partitioner"->partitionerValue,"spark.mongodb.input.partitionerOptions.lowestNumber"->"1","spark.mongodb.input.partitionerOptions.highestNumber"->"5","spark.mongodb.input.partitionerOptions.partitionKey"->"storeId","batchSize"->"100"))
 
     import com.mongodb.spark.MongoSpark
 
